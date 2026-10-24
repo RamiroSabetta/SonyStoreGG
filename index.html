@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SONY STORE GG</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: #e8eaf0;
+    background:
+      radial-gradient(900px 500px at 15% -10%, rgba(124, 77, 255, .35), transparent 60%),
+      radial-gradient(800px 500px at 100% 0%, rgba(0, 200, 255, .25), transparent 60%),
+      #0d0f16;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header { text-align: center; padding: 56px 16px 24px; }
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    background: linear-gradient(90deg, #a78bfa, #38bdf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  header p { margin-top: 8px; color: #9aa0b4; }
+  .tabs { display: flex; justify-content: center; gap: 10px; padding: 0 16px 28px; }
+  .tab {
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .12);
+    color: #cfd3e3;
+    padding: 10px 24px;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .tab:hover { border-color: rgba(167, 139, 250, .6); }
+  .tab.activa {
+    background: linear-gradient(90deg, #7c4dff, #00b8ff);
+    border-color: transparent;
+    color: #fff;
+  }
+  main { flex: 1; padding: 0 16px 40px; }
+  .grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 20px;
+  }
+  .seccion[hidden] { display: none; }
+  .card {
+    position: relative;
+    background: rgba(255, 255, 255, .05);
+    border: 1px solid rgba(255, 255, 255, .1);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    padding: 28px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(167, 139, 250, .6);
+    box-shadow: 0 12px 32px rgba(124, 77, 255, .25);
+  }
+  .avatar {
+    width: 64px; height: 64px;
+    border-radius: 18px;
+    display: grid; place-items: center;
+    font-size: 1.8rem; font-weight: 800; color: #fff;
+    background: linear-gradient(135deg, var(--c1), var(--c2));
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+  }
+  .card h2 { font-size: 1.25rem; }
+  .btn {
+    background: linear-gradient(90deg, #7c4dff, #00b8ff);
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    transition: transform .15s, filter .15s;
+  }
+  .btn:hover { transform: scale(1.06); filter: brightness(1.1); }
+  footer {
+    text-align: center;
+    padding: 24px 16px;
+    color: #9aa0b4;
+    border-top: 1px solid rgba(255, 255, 255, .08);
+  }
+  footer a { color: #a78bfa; text-decoration: none; font-weight: 600; }
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Catálogo de emuladores y tiendas</h1>
+    <p>Elegí uno y andá directo a su descarga</p>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab activa" data-target="emuladores">Emuladores</button>
+    <button class="tab" data-target="tiendas">Tiendas de videojuegos</button>
+  </nav>
+
+  <main>
+    <section class="seccion" id="emuladores"><div class="grid"></div></section>
+    <section class="seccion" id="tiendas" hidden><div class="grid"></div></section>
+  </main>
+
+  <footer>
+    Desarrollada por <a href="https://github.com/RamiroSabetta" target="_blank" rel="noopener noreferrer">Ramiro Sabetta</a>
+  </footer>
+
+<script>
+  const emuladores = [
+    { nombre: "Dolphin",   url: "https://github.com/dolphin-emu/dolphin" },
+    { nombre: "Crema",     url: "https://github.com/iHaiDeeZ/Crema" },
+    { nombre: "Resonance", url: "https://github.com/iHaiDeeZ/Resonance/releases/tag/v01.22" },
+    { nombre: "VITA4",     url: "https://github.com/Fraudware/VITA4/releases/tag/v1.0.0" },
+    { nombre: "ALLESIU",   url: "https://github.com/worldchane/snesui/releases" },
+    { nombre: "M33",       url: "https://github.com/iHaiDeeZ/M33/releases/tag/1.00" },
+    { nombre: "EmuSuNi",   url: "https://github.com/arturofuentes1988/EmuSuNi/releases" },
+    { nombre: "PS4SX2",    url: "https://github.com/Phoenixx1202/PS4SX2/releases/tag/01.00" }
+  ];
+
+  const tiendas = [
+    { nombre: "DLPS Game", url: "https://dlpsgame.com/category/ps4/" },
+    { nombre: "Super PSX", url: "https://www.superpsx.com/" },
+    { nombre: "retrowbfsgames", url: "https://retrowbfsgames.com/" },
+    { nombre: "Roms fun", url: "https://romsfun.com/" }
+  ];
+
+  function render(lista, contenedor, textoBoton) {
+    lista.forEach((e, i) => {
+      const hue = (i * 47 + 250) % 360;
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `<div class="avatar"></div><h2></h2><a class="btn" target="_blank" rel="noopener noreferrer"></a>`;
+      const av = card.querySelector(".avatar");
+      av.textContent = e.nombre[0].toUpperCase();
+      av.style.setProperty("--c1", `hsl(${hue} 80% 60%)`);
+      av.style.setProperty("--c2", `hsl(${(hue + 50) % 360} 80% 45%)`);
+      card.querySelector("h2").textContent = e.nombre;
+      const a = card.querySelector("a");
+      a.textContent = textoBoton;
+      a.href = e.url;
+      contenedor.appendChild(card);
+    });
+  }
+
+  render(emuladores, document.querySelector("#emuladores .grid"), "Ir a la descarga");
+  render(tiendas, document.querySelector("#tiendas .grid"), "Ir a la tienda");
+
+  document.querySelectorAll(".tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(b => b.classList.toggle("activa", b === btn));
+      document.querySelectorAll(".seccion").forEach(s => s.hidden = s.id !== btn.dataset.target);
+    });
+  });
+</script>
+</body>
+</html>
